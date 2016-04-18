@@ -1,5 +1,5 @@
 # :bookmark_tabs: Style Guide Generator
-A billboard for showing activity feeds
+Generate a SASS stylesheet based on user-defined settings
 
 ## Description
 __Style Guide Generator__ is a web application that can be used to generate a SASS stylesheet based on user-defined settings.
