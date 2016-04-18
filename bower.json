@@ -1,0 +1,39 @@
+{
+  "name": "style-guide-generator",
+  "description": "Generate a SASS stylesheet based on user-defined settings",
+  "main": "index.js",
+  "authors": [
+    "James Feigel (@jfeigel)"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "koa",
+    "handlebars",
+    "passport"
+  ],
+  "homepage": "https://github.com/jfeigel/style-guide-generator",
+  "moduleType": [
+    "es6",
+    "node"
+  ],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "assets/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "font-awesome": "^4.5.0",
+    "bootstrap-social": "^4.12.0",
+    "jquery": "^2.2.2",
+    "bootstrap-material-design": "^0.5.9"
+  },
+  "resolutions": {
+    "bootstrap": "~3",
+    "jquery": ">= 1.9.0"
+  }
+}
