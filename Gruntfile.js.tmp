@@ -1,0 +1,29 @@
+module.exports = function (grunt) {
+	var gruntConfig = {
+    pkg: grunt.file.readJSON('package.json')
+  };
+
+	gruntConfig['gh-pages'] = {
+	  'js-pages': {
+	    src: ['**'],
+	    options: {
+	      base: 'docs'
+	    }
+	  }
+	};
+
+  gruntConfig['jsdoc'] = {
+    dist: {
+      src: ['**/*.js', '!node_modules', '!public/bower_components'],
+      options: {
+        destination: 'docs',
+        configure: 'jsdoc-conf.json'
+      }
+    }
+  };
+
+  grunt.initConfig(gruntConfig);
+
+  grunt.loadNpmTasks('grunt-gh-pages');
+  grunt.loadNpmTasks('grunt-jsdoc');
+};

@@ -1,7 +1,14 @@
+// REACT IMPORTS
 import React from "react";
 import ReactDOM from "react-dom";
 
+// LIB IMPORTS
+import polyfill from "es6-promise";
+import "isomorphic-fetch";
 import _ from "lodash";
+
+// COMPONENT IMPORTS
+import Nav from "../NavComponent";
 
 class AppComponent extends React.Component {
 	constructor(props) {
@@ -9,7 +16,6 @@ class AppComponent extends React.Component {
 
     // Initial State
     this.state = {
-    	
 		};
 
 		// Bind functions to this
@@ -25,6 +31,8 @@ class AppComponent extends React.Component {
 		  	<div className="row">
 		  		<div className="col-xs-2 sidebar">
 		  			<p>Style Guide Generator</p>
+		  			<Nav children={this.props.children} />
+		  			{this.props.children}
 	  			</div>
 	  			<div className="col-xs-10 main-content">
 	  				<div className="row">

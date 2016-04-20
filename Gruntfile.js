@@ -4,6 +4,31 @@ module.exports = function grunt(grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON("package.json"),
 
+		jsdoc: {
+			dist: {
+				src: [
+					"app/**/*.js",
+					"controllers/*.js",
+					"models/*.js",
+					"index.js",
+					"routes.js"
+				],
+				options: {
+					destination: "docs",
+					configure: "jsdoc-conf.json"
+				}
+			}
+		},
+
+		"gh-pages": {
+			"js-pages": {
+				src: ["**"],
+				options: {
+					base: "docs"
+				}
+			}
+		},
+
 		// Delete compiled files before recompiling
 		clean: {
 			styles: ["assets/styles/custom.css"]
@@ -76,10 +101,13 @@ module.exports = function grunt(grunt) {
 	grunt.loadNpmTasks("grunt-contrib-clean");
 	grunt.loadNpmTasks("grunt-contrib-sass");
 	grunt.loadNpmTasks("grunt-contrib-watch");
+	grunt.loadNpmTasks("grunt-gh-pages");
+	grunt.loadNpmTasks("grunt-jsdoc");
 	grunt.loadNpmTasks("grunt-nodemon");
 	grunt.loadNpmTasks("grunt-postcss");
 
 	grunt.registerTask("compile", ["clean", "sass", "postcss"]);
+	grunt.registerTask("pushdoc", ["jsdoc", "gh-pages"]);
 
 	// Default grunt task
 	grunt.registerTask("default", ["compile", "concurrent"]);

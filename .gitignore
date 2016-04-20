@@ -42,3 +42,4 @@ build/app.js
 *.map
 .sass-cache
 assets/styles/**/*.css
+docs

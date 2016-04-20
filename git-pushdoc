@@ -1,0 +1,4 @@
+#!/bin/sh
+
+git push "$@"
+test $? -eq 0 && grunt jsdoc && grunt gh-pages
