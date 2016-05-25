@@ -5,40 +5,34 @@ const config = require("../config.json");
 const r = require("rethinkdb");
 const moment = require("moment");
 
-let connection;
+// let connection;
 
 // EXPORTS //
 module.exports = {
-	get: _get,
-	create: _create,
-	update: _update
+	get: function* _get(req, params) {
+		return yield getStyleguide(params.id);
+	},
+
+	create: function* _create(req, params) {
+		return yield createStyleguide(req.body);
+	},
+
+	update: function* _update(req, params) {
+		return yield updateStyleguide(params.id, req.body);
+	}
 };
-
-// EXPORT FUNCTIONS //
-function* _get(req) {
-	return yield getStyleguide(req.params.id);
-}
-
-function* _create(req) {
-	return yield createStyleguide(req.body);
-}
-
-function* _update(req) {
-	return yield updateStyleguide(req.params.id, req.body);
-}
-// END EXPORTS //
 
 // HELPER FUNCTIONS //
 function* createConnection() {
 	try {
-		connection = yield r.connect(config.site.db);
+		return yield r.connect(config.site.db);
 	} catch (err) {
 		console.error(err);
 	}
 }
 
 function* getStyleguide(id) {
-	yield createConnection();
+	const connection = yield createConnection();
 	const result = yield r.table("styleguide").get(id).run(connection);
 	if (result === null) {
 		throw new Error(`Style Guide not found (id: ${id}) | in styleguide.getStyleguide`);
@@ -48,7 +42,7 @@ function* getStyleguide(id) {
 }
 
 function* createStyleguide(styleguide) {
-	yield createConnection();
+	const connection = yield createConnection();
 	styleguide.timestamp = moment().valueOf();
 	const result = yield r.table("styleguide").insert(styleguide, {returnChanges: true}).run(connection);
 	connection.close();
@@ -56,7 +50,7 @@ function* createStyleguide(styleguide) {
 }
 
 function* updateStyleguide(id, styleguide) {
-	yield createConnection();
+	const connection = yield createConnection();
 	const result = yield r.table("styleguide").get(id).update(styleguide).run(connection);
 	if (result === null) {
 		throw new Error(`Error updating Style Guide (id: ${id}) | styleguide.updateStyleguide`);

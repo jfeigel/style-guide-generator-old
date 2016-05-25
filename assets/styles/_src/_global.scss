@@ -1,5 +1,5 @@
-html,
-body {
+body,
+html {
 	height: 100%;
 }
 
@@ -12,10 +12,10 @@ body {
 	min-height: 100%;
 }
 
-.sidebar,
 .main-content,
 .main-content-code,
-.main-content-output {
-    margin-bottom: -9999px;
-    padding-bottom: 9999px;
+.main-content-output,
+.sidebar {
+	margin-bottom: -9999px;
+	padding-bottom: 9999px;
 }

@@ -5,50 +5,36 @@ const config = require("../config.json");
 const r = require("rethinkdb");
 const _ = require("lodash");
 
-let connection;
-
 // EXPORTS //
 module.exports = {
-	get: _get,
-	getAll: _getAll,
-	getStyleguides: _getStyleguides,
-	create: _create,
-	update: _update
+	get: function* _get(req, params) {
+		return yield getCustomer(params.id);
+	},
+	getAll: function* _getAll(req, params) {
+		return yield getAllCustomers();
+	},
+	getStyleguides: function* _getStyleguides(req, params) {
+		return yield getStyleguides(params.customer_id);
+	},
+	create: function* _create(req, params) {
+		return yield createCustomer(req.body);
+	},
+	update: function* _update(req, params) {
+		return yield updateCustomer(params.id, req.body);
+	}
 };
-
-// EXPORT FUNCTIONS //
-function* _get(req, params) {
-	return yield getCustomer(params.id);
-}
-
-function* _getAll(req, params) {
-	return yield getAllCustomers();
-}
-
-function* _getStyleguides(req, params) {
-	return yield getStyleguides(params.customer_id);
-}
-
-function* _create(req, params) {
-	return yield createCustomer(req.body);
-}
-
-function* _update(req, params) {
-	return yield updateCustomer(params.id, req.body);
-}
-// END EXPORTS //
 
 // HELPER FUNCTIONS //
 function* createConnection() {
 	try {
-		connection = yield r.connect(config.site.db);
+		return yield r.connect(config.site.db);
 	} catch (err) {
 		console.error(err);
 	}
 }
 
 function* getCustomer(id) {
-	yield createConnection();
+	const connection = yield createConnection();
 	const result = yield r.table("customer").get(id).run(connection);
 	if (result === null) {
 		throw new Error(`Customer not found (id: ${id}) | in customer.getCustomer`);
@@ -58,7 +44,7 @@ function* getCustomer(id) {
 }
 
 function* getAllCustomers() {
-	yield createConnection();
+	const connection = yield createConnection();
 	const cursor = yield r.table("customer").run(connection);
 	const result = yield cursor.toArray();
 	if (result === null) {
@@ -69,7 +55,7 @@ function* getAllCustomers() {
 }
 
 function* getStyleguides(customer_id) {
-	yield createConnection();
+	const connection = yield createConnection();
 	const cursor = yield r.table("styleguide")
 		.orderBy({index: "timestamp"})
 		.filter({"customer_id": customer_id})
@@ -95,14 +81,14 @@ function* getStyleguides(customer_id) {
 }
 
 function* createCustomer(customer) {
-	yield createConnection();
+	const connection = yield createConnection();
 	const result = yield r.table("customer").insert(customer, {returnChanges: true}).run(connection);
 	connection.close();
 	return result.changes[0].new_val;
 }
 
 function* updateCustomer(id, customer) {
-	yield createConnection();
+	const connection = yield createConnection();
 	const result = yield r.table("customer").get(id).update(customer).run(connection);
 	if (result === null) {
 		throw new Error(`Error updating Style Guide (id: ${id}) | customer.updateCustomer`);

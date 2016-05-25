@@ -5,11 +5,29 @@
   },
 
   "ecmaFeatures": {
-    "generators": true,
-    "blockBindings": true,
-    "templateStrings": true,
     "arrowFunctions": true,
+    "binaryLiterals": false,
+    "blockBindings": true,
+    "classes": true,
+    "defaultParams": true,
+    "destructuring": true,
     "forOf": true,
+    "generators": true,
+    "modules": true,
+    "objectLiteralComputedProperties": true,
+    "objectLiteralDuplicateProperties": false,
+    "objectLiteralShorthandMethods": true,
+    "objectLiteralShorthandProperties": true,
+    "octalLiterals": false,
+    "regexUFlag": false,
+    "regexYFlag": false,
+    "restParams": true,
+    "spread": true,
+    "superInFunctions": true,
+    "templateStrings": true,
+    "unicodePointEscapes": true,
+    "globalReturn": false,
+    "jsx": true
   },
 
   "rules": {
