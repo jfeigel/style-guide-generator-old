@@ -1,14 +1,30 @@
 .sidebar {
 	border-right: .1rem solid $iron;
 
+	h3 {
+		text-align: center;
+	}
+
 	.list-group {
 		.back-to-customers {
 			margin-bottom: 1rem;
+			text-align: right;
 		}
 		.list-group-item {
 			padding-top: .5rem;
 			padding-bottom: .5rem;
 			cursor: pointer;
+			[class*="fa-angle-"] {
+				position: absolute;
+				top: 50%;
+				transform: translateY(-50%);
+			}
+			[class*="fa-angle-right"] {
+				right: 1.5rem;
+			}
+			[class*="fa-angle-left"] {
+				left: 1.5rem;
+			}
 		}
 	}
 }

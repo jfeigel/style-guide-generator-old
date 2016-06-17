@@ -79,9 +79,12 @@ module.exports = function grunt(grunt) {
 			dev: {
 				script: "index.js",
 				options: {
-					ext: "js,hbs"
-				},
-				env: "local"
+					ext: "js,hbs",
+					env: {
+						NODE_ENV: "local",
+						PORT: "5001"
+					}
+				}
 			}
 		},
 

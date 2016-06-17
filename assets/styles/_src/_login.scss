@@ -1,0 +1,29 @@
+.btn {
+  &[class*="btn-login-"] {
+    color: #fff;
+  }
+
+  &.btn-login-github {
+    background-color: $github;
+    &:hover,
+    &:active {
+      background-color: darken($github, $btn-hover-amount) !important;
+    }
+  }
+
+  &.btn-login-facebook {
+    background-color: $facebook;
+    &:hover,
+    &:active {
+      background-color: darken($facebook, $btn-hover-amount) !important;
+    }
+  }
+
+  &.btn-login-twitter {
+    background-color: $twitter;
+    &:hover,
+    &:active {
+      background-color: darken($twitter, $btn-hover-amount) !important;
+    }
+  }
+}

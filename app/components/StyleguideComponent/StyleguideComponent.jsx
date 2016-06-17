@@ -31,7 +31,7 @@ class StyleguideComponent extends React.Component {
 	_getStyleguide() {
 		const self = this;
 
-		fetch(`/styleguide/${self.props.params.styleguide_id}`)
+		fetch(`/app/styleguide/${self.props.params.styleguide_id}`, { credentials: "include" })
 			.then((response) => {
 				if (response.status >= 400) {
 					throw new Error("Bad response from server");

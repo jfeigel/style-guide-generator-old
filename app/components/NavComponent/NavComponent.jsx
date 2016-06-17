@@ -30,7 +30,7 @@ class NavComponent extends React.Component {
 	_getCustomers() {
 		const self = this;
 
-		fetch("/customer")
+		fetch("/app/customer", { credentials: "include" })
 			.then((response) => {
 				if (response.status >= 400) {
 					throw new Error("Bad response from server");
@@ -48,7 +48,7 @@ class NavComponent extends React.Component {
 	_getStyleguides(customer_id) {
 		const self = this;
 
-		fetch(`/customer/styleguide/${customer_id}`)
+		fetch(`/app/customer/styleguide/${customer_id}`, { credentials: "include" })
 			.then((response) => {
 				if (response.status >= 400) {
 					throw new Error("Bad response from server");
@@ -81,7 +81,7 @@ class NavComponent extends React.Component {
 									key={index}
 									onClick={this._getStyleguides.bind(this, customer.id)}
 									className="list-group-item">
-										{customer.name}<i className="pull-right fa fa-angle-right"></i>
+										{customer.name}<i className="fa fa-angle-right"></i>
 								</a>
 							);
 						});
@@ -91,7 +91,7 @@ class NavComponent extends React.Component {
 								key={0}
 								onClick={this._backToCustomers.bind(this)}
 								className="list-group-item back-to-customers">
-									<i className="fa fa-angle-left"></i><span className="pull-right">Back to Customer List</span>
+									<i className="fa fa-angle-left"></i>Back to Customer List
 							</a>
 						].concat(this.state.styleguides.map((styleguide, index) => {
 							return (
@@ -99,7 +99,7 @@ class NavComponent extends React.Component {
 									key={index + 1}
 									to={`/styleguide/${styleguide.id}`}
 									className="list-group-item">
-										{styleguide.name}<i className="pull-right fa fa-angle-right"></i>
+										{styleguide.name}<i className="fa fa-angle-right"></i>
 								</Link>
 							);
 						}));

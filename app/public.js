@@ -3,8 +3,7 @@ import { render } from "react-dom";
 import { Router, Route, hashHistory } from "react-router";
 import injectTapEventPlugin from "react-tap-event-plugin";
 
-import App from "./components/AppComponent";
-import Styleguide from "./components/StyleguideComponent";
+import Public from "./components/PublicComponent";
 
 import "../assets/styles/custom.css";
 
@@ -12,9 +11,7 @@ injectTapEventPlugin();
 
 const rootInstance = render((
 	<Router history={hashHistory}>
-		<Route path="/" component={App}>
-			<Route path="styleguide/:styleguide_id" component={Styleguide} />
-		</Route>
+		<Route path="/" component={Public}></Route>
 	</Router>
 ), document.getElementById("react-wrapper"));
 

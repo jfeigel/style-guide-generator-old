@@ -2,60 +2,44 @@
 
 const config = require("../config.json");
 
-const r = require("rethinkdb");
+const r = require("rethinkdbdash")(config.site.db);
 const moment = require("moment");
-
-// let connection;
 
 // EXPORTS //
 module.exports = {
-	get: function* _get(req, params) {
-		return yield getStyleguide(params.id);
+	get: function* _get(id) {
+		return yield getStyleguide(id);
 	},
 
-	create: function* _create(req, params) {
-		return yield createStyleguide(req.body);
+	create: function* _create(styleguide) {
+		return yield createStyleguide(styleguide);
 	},
 
-	update: function* _update(req, params) {
-		return yield updateStyleguide(params.id, req.body);
+	update: function* _update(id, styleguide) {
+		return yield updateStyleguide(id, styleguide);
 	}
 };
 
 // HELPER FUNCTIONS //
-function* createConnection() {
-	try {
-		return yield r.connect(config.site.db);
-	} catch (err) {
-		console.error(err);
-	}
-}
-
 function* getStyleguide(id) {
-	const connection = yield createConnection();
-	const result = yield r.table("styleguide").get(id).run(connection);
+	const result = yield r.table("styleguide").get(id).run();
 	if (result === null) {
 		throw new Error(`Style Guide not found (id: ${id}) | in styleguide.getStyleguide`);
 	}
-	connection.close();
 	return result;
 }
 
 function* createStyleguide(styleguide) {
-	const connection = yield createConnection();
 	styleguide.timestamp = moment().valueOf();
-	const result = yield r.table("styleguide").insert(styleguide, {returnChanges: true}).run(connection);
-	connection.close();
+	const result = yield r.table("styleguide").insert(styleguide, {returnChanges: true}).run();
 	return result.changes[0].new_val;
 }
 
 function* updateStyleguide(id, styleguide) {
-	const connection = yield createConnection();
-	const result = yield r.table("styleguide").get(id).update(styleguide).run(connection);
+	const result = yield r.table("styleguide").get(id).update(styleguide).run();
 	if (result === null) {
 		throw new Error(`Error updating Style Guide (id: ${id}) | styleguide.updateStyleguide`);
 	}
-	connection.close();
 	return result;
 }
 // END HELPER FUNCTIONS //
