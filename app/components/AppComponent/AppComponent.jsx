@@ -9,6 +9,7 @@ import { getMuiTheme, MuiThemeProvider } from "material-ui/styles";
 // components
 import { AppBar, Drawer, IconButton, IconMenu, MenuItem } from "material-ui";
 // icons
+import ActionHighlightOff from "material-ui/svg-icons/action/highlight-off";
 import MoreVertIcon from "material-ui/svg-icons/navigation/more-vert";
 import MenuIcon from "material-ui/svg-icons/navigation/menu";
 
@@ -76,6 +77,7 @@ class AppComponent extends React.Component {
 							<MenuItem
 								primaryText="Sign out"
 								onTouchTap={this._signOut}
+								leftIcon={<ActionHighlightOff />}
 							/>
 						</IconMenu>
 					}

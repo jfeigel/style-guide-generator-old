@@ -20,7 +20,7 @@ const customer = require("./controllers/customer.js");
 
 // INDEX
 public_routes.get("/", function* get() {
-	yield this.render("public");
+	yield this.render("main");
 });
 
 // LOGOUT
@@ -37,7 +37,7 @@ public_routes.get("/auth/github",
 
 public_routes.get("/auth/github/callback",
 	passport.authenticate("github", {
-		successRedirect: "/app",
+		successRedirect: "/#/app",
 		failureRedirect: "/"
 	})
 );
@@ -49,7 +49,7 @@ public_routes.get("/auth/facebook",
 
 public_routes.get("/auth/facebook/callback",
 	passport.authenticate("facebook", {
-		successRedirect: "/app",
+		successRedirect: "/#/app",
 		failureRedirect: "/"
 	})
 );
@@ -61,7 +61,7 @@ public_routes.get("/auth/twitter",
 
 public_routes.get("/auth/twitter/callback",
 	passport.authenticate("twitter", {
-		successRedirect: "/app",
+		successRedirect: "/#/app",
 		failureRedirect: "/"
 	})
 );
@@ -82,7 +82,7 @@ app.use(function* auth(next) {
 
 // ROOT
 app_routes.get("/app", function* get() {
-	yield this.render("app");
+	yield this.render("main");
 });
 
 // STYLE GUIDES

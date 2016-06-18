@@ -8,8 +8,7 @@ module.exports = {
 	entry: [
 		"webpack/hot/dev-server",
 		`webpack-dev-server/client?http://0.0.0.0:${config.site.port + 1}`,
-		path.resolve(__dirname, "app/app.js"),
-		path.resolve(__dirname, "app/public.js")
+		path.resolve(__dirname, "app/app.js")
 	],
 
 	output: {

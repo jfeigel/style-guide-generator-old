@@ -45,7 +45,7 @@ co(function* coWrapper() {
 		viewPath: `${__dirname}/views`,
 		layoutsPath: `${__dirname}/views/layouts`,
 		partialsPath: `${__dirname}/views/partials`,
-		defaultLayout: "public"
+		defaultLayout: "main"
 	}));
 
 	app.use(function* appUse(next) {

@@ -4,10 +4,9 @@ import ReactDOM from "react-dom";
 
 // MATERIAL-UI
 // theme
-import darkBaseTheme from "material-ui/styles/baseThemes/darkBaseTheme";
 import { getMuiTheme, MuiThemeProvider } from "material-ui/styles";
 // components
-import { AppBar, FloatingActionButton, FontIcon, IconMenu, IconButton, MenuItem } from "material-ui";
+import { AppBar, FloatingActionButton, FontIcon, IconMenu, IconButton, MenuItem, Subheader } from "material-ui";
 // icons
 import ActionAccountCircle from "material-ui/svg-icons/action/account-circle";
 import MoreVertIcon from "material-ui/svg-icons/navigation/more-vert";
@@ -51,10 +50,18 @@ class PublicComponent extends React.Component {
 							targetOrigin={{horizontal: "right", vertical: "top"}}
 							anchorOrigin={{horizontal: "right", vertical: "top"}}
 						>
+							<Subheader
+								style={{
+									fontWeight: "bold",
+									fontSize: "1.8rem"
+								}}
+							>
+								Login
+							</Subheader>
 							<MenuItem
 								primaryText="Github"
 								onTouchTap={() => this._login("github")}
-								rightIcon={
+								leftIcon={
 									<FontIcon
 										className="fa fa-github"
 									/>
@@ -63,7 +70,7 @@ class PublicComponent extends React.Component {
 							<MenuItem
 								primaryText="Facebook"
 								onTouchTap={() => this._login("facebook")}
-								rightIcon={
+								leftIcon={
 									<FontIcon
 										className="fa fa-facebook"
 									/>
@@ -72,7 +79,7 @@ class PublicComponent extends React.Component {
 							<MenuItem
 								primaryText="Twitter"
 								onTouchTap={() => this._login("twitter")}
-								rightIcon={
+								leftIcon={
 									<FontIcon
 										className="fa fa-twitter"
 									/>

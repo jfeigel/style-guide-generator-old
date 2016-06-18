@@ -6,6 +6,13 @@ import polyfill from "es6-promise";
 import "isomorphic-fetch";
 import _ from "lodash";
 
+// MATERIAL-UI
+// components
+import { List, ListItem } from "material-ui";
+// icons
+import ChevronLeftIcon from "material-ui/svg-icons/navigation/chevron-left";
+import ChevronRightIcon from "material-ui/svg-icons/navigation/chevron-right";
+
 class NavComponent extends React.Component {
 	constructor(props) {
 		super(props);
@@ -72,40 +79,43 @@ class NavComponent extends React.Component {
 
 	render() {
 		return (
-			<div role="nav" className="list-group">
+			<List>
 				{(() => {
 					if (this.state.active_list === "customers") {
 						return this.state.customers.map((customer, index) => {
 							return (
-								<a
+								<ListItem
 									key={index}
-									onClick={this._getStyleguides.bind(this, customer.id)}
-									className="list-group-item">
-										{customer.name}<i className="fa fa-angle-right"></i>
-								</a>
+									primaryText={customer.name}
+									onTouchTap={this._getStyleguides.bind(this, customer.id)}
+									rightIcon={<ChevronRightIcon />}
+								/>
 							);
 						});
 					} else if (this.state.active_list === "styleguides") {
 						return [
-							<a
+							<ListItem
 								key={0}
-								onClick={this._backToCustomers.bind(this)}
-								className="list-group-item back-to-customers">
-									<i className="fa fa-angle-left"></i>Back to Customer List
-							</a>
+								primaryText="Back to Customer List"
+								onTouchTap={this._backToCustomers.bind(this)}
+								leftIcon={<ChevronLeftIcon />}
+							/>
 						].concat(this.state.styleguides.map((styleguide, index) => {
 							return (
 								<Link
 									key={index + 1}
 									to={`/styleguide/${styleguide.id}`}
-									className="list-group-item">
-										{styleguide.name}<i className="fa fa-angle-right"></i>
+								>
+									<ListItem
+										primaryText={styleguide.name}
+										rightIcon={<ChevronRightIcon />}
+									/>
 								</Link>
 							);
 						}));
 					}
 				})()}
-			</div>
+			</List>
 		);
 	}
 }
