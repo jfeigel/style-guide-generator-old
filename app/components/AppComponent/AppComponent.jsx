@@ -7,7 +7,7 @@ import ReactDOM from "react-dom";
 import darkBaseTheme from "material-ui/styles/baseThemes/darkBaseTheme";
 import { getMuiTheme, MuiThemeProvider } from "material-ui/styles";
 // components
-import { AppBar, Drawer, IconButton, IconMenu, MenuItem } from "material-ui";
+import { AppBar, Card, CardHeader, CardText, Drawer, IconButton, IconMenu, MenuItem } from "material-ui";
 // icons
 import ActionHighlightOff from "material-ui/svg-icons/action/highlight-off";
 import MoreVertIcon from "material-ui/svg-icons/navigation/more-vert";
@@ -64,6 +64,7 @@ class AppComponent extends React.Component {
 					<Nav />
 				</Drawer>
 				<AppBar
+					className="app-bar"
 					title="Style Guide Generator"
 					onLeftIconButtonTouchTap={this._toggleDrawer.bind(this)}
 					iconElementRight={
@@ -82,14 +83,20 @@ class AppComponent extends React.Component {
 						</IconMenu>
 					}
 				/>
-				<div className="container-fluid">
+				<div className="container-fluid main-content-container">
 					<div className="row">
-						<div className="col-xs-6 main-content-code">
-							<p>Code:</p>
+						<div className="col-xs-6">
+							<Card className="main-content-card">
+								<CardHeader title="Code"></CardHeader>
+							</Card>
 						</div>
-						<div className="col-xs-6 main-content-output">
-							<p>Output:</p>
-							{this.props.children}
+						<div className="col-xs-6">
+							<Card className="main-content-card">
+								<CardHeader title="Output"></CardHeader>
+								<CardText>
+									{this.props.children}
+								</CardText>
+							</Card>
 						</div>
 					</div>
 				</div>

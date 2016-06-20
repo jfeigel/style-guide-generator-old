@@ -7,14 +7,11 @@ html {
 	height: 100%;
 }
 
-.container-fluid {
-	overflow: hidden;
-	min-height: 100%;
+div[data-reactroot] {
+	height: 100%;
 }
 
-// .main-content,
-.main-content-code,
-.main-content-output {
-	margin-bottom: -9999px;
-	padding-bottom: 9999px;
+.container-fluid {
+	overflow: hidden;
+	// min-height: 100%;
 }

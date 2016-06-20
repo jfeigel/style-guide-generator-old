@@ -26,13 +26,11 @@
     "tests"
   ],
   "dependencies": {
-    "bootstrap": "^3.3.6",
     "font-awesome": "^4.5.0",
     "jquery": "^2.2.2",
-    "bootstrap-material-design": "^0.5.9"
+    "bootstrap": "v4.0.0-alpha.2"
   },
   "resolutions": {
-    "bootstrap": "~3",
-    "jquery": ">= 1.9.0"
+    "jquery": "^2"
   }
 }

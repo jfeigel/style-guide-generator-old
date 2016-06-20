@@ -31,7 +31,8 @@ module.exports = function grunt(grunt) {
 
 		// Delete compiled files before recompiling
 		clean: {
-			styles: ["assets/styles/custom.css"]
+			styles: ["assets/styles/custom.css"],
+			scripts: ["assets/scripts/scripts.js"]
 		},
 
 		// converts SASS to CSS
@@ -59,11 +60,23 @@ module.exports = function grunt(grunt) {
 			}
 		},
 
+		concat: {
+			scripts: {
+				files: {
+					"assets/scripts/scripts.js": "assets/scripts/_src/*.js"
+				}
+			}
+		},
+
 		// Watch directories for changes
 		watch: {
 			styles: {
 				files: ["assets/styles/**/*.scss"],
 				tasks: ["sass"]
+			},
+			scripts: {
+				files: ["assets/scripts/_src/*.js"],
+				tasks: ["concat:scripts"]
 			},
 			livereload: {
 				files: [
@@ -102,14 +115,16 @@ module.exports = function grunt(grunt) {
 	// Load Grunt dependencies
 	grunt.loadNpmTasks("grunt-concurrent");
 	grunt.loadNpmTasks("grunt-contrib-clean");
+	grunt.loadNpmTasks("grunt-contrib-concat");
 	grunt.loadNpmTasks("grunt-contrib-sass");
+	grunt.loadNpmTasks("grunt-contrib-uglify");
 	grunt.loadNpmTasks("grunt-contrib-watch");
 	grunt.loadNpmTasks("grunt-gh-pages");
 	grunt.loadNpmTasks("grunt-jsdoc");
 	grunt.loadNpmTasks("grunt-nodemon");
 	grunt.loadNpmTasks("grunt-postcss");
 
-	grunt.registerTask("compile", ["clean", "sass", "postcss"]);
+	grunt.registerTask("compile", ["clean", "sass", "postcss", "concat"]);
 	grunt.registerTask("pushdoc", ["jsdoc", "gh-pages"]);
 
 	// Default grunt task
