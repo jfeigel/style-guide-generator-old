@@ -21,9 +21,6 @@ import ActionHighlightOff from "material-ui/svg-icons/action/highlight-off";
 import MoreVertIcon from "material-ui/svg-icons/navigation/more-vert";
 import MenuIcon from "material-ui/svg-icons/navigation/menu";
 
-// REACT COMPONENTS
-import { ChromePicker } from "react-color";
-
 // LIB IMPORTS
 import polyfill from "es6-promise";
 import "isomorphic-fetch";
@@ -31,6 +28,7 @@ import _ from "lodash";
 
 // COMPONENT IMPORTS
 import Nav from "../NavComponent";
+import ColorPicker from "../ColorPickerComponent";
 
 class AppComponent extends React.Component {
 	constructor(props) {
@@ -38,27 +36,47 @@ class AppComponent extends React.Component {
 
 		// Initial State
 		this.state = {
-			isDrawerOpen: false,
-			doShowColorPicker: {
-				primary: false,
-				secondary: false,
-				tertiary: false
+			isDrawerOpen: true,
+			rules: {
+				colors: {
+					primary: "",
+					secondary: "",
+					tertiary: ""
+				}
 			}
 		};
 
 		// Bind functions to this
 		this._signOut = this._signOut.bind(this);
 		this._toggleDrawer = this._toggleDrawer.bind(this);
-		this._doShowColorPicker = this._doShowColorPicker.bind(this);
+		this._onDrawerRequestChange = this._onDrawerRequestChange.bind(this);
+		this._updateColor = this._updateColor.bind(this);
 	}
 
-	componentDidMount() {
+	// LIFECYCLE METHODS
+	componentWillMount() {
+		if (!/^\/app(?:\/)?$/.test(this.props.location.pathname)) {
+			this.setState({
+				isDrawerOpen: false
+			});
+		}
+	}
+
+	componentDidMount() {}
+
+	componentWillReceiveProps(nextProps) {
+		if (!/^\/app(?:\/)?$/.test(nextProps.location)) {
+			this.setState({
+				isDrawerOpen: false
+			});
+		}
 	}
 
 	getChildContext() {
 		return { muiTheme: getMuiTheme(baseTheme) };
 	}
 
+	// HELPER FUNCTIONS
 	_signOut() {
 		window.location.href = "/logout";
 	}
@@ -69,12 +87,19 @@ class AppComponent extends React.Component {
 		});
 	}
 
-	_doShowColorPicker(colorType, doShowColorPicker) {
-		const currentColorPickerState = this.state.doShowColorPicker;
-		currentColorPickerState[colorType] = doShowColorPicker;
+	_onDrawerRequestChange(openRequest) {
+		if (!/^\/app(?:\/)?$/.test(this.props.location.pathname)) {
+			this.setState({ isDrawerOpen: openRequest });
+		} else {
+			this.setState({ isDrawerOpen: true });
+		}
+	}
 
+	_updateColor(type, color) {
+		const rules = this.state.rules;
+		rules.colors[type] = color;
 		this.setState({
-			doShowColorPicker: currentColorPickerState
+			rules: rules
 		});
 	}
 
@@ -82,27 +107,27 @@ class AppComponent extends React.Component {
 		return (
 			<div>
 				<Drawer
-					docked={false}
-					open={this.state.isDrawerOpen}
-					onRequestChange={(isDrawerOpen) => this.setState({isDrawerOpen})}>
+					docked={ false }
+					open={ this.state.isDrawerOpen }
+					onRequestChange={ this._onDrawerRequestChange }>
 					<Nav />
 				</Drawer>
 				<AppBar
 					className="app-bar"
 					title="Style Guide Generator"
-					onLeftIconButtonTouchTap={this._toggleDrawer.bind(this)}
+					onLeftIconButtonTouchTap={ this._toggleDrawer.bind(this) }
 					iconElementRight={
 						<IconMenu
 							iconButtonElement={
 								<IconButton><MoreVertIcon /></IconButton>
 							}
-							targetOrigin={{horizontal: "right", vertical: "top"}}
-							anchorOrigin={{horizontal: "right", vertical: "top"}}
+							targetOrigin={{ horizontal: "right", vertical: "top" }}
+							anchorOrigin={{ horizontal: "right", vertical: "top" }}
 						>
 							<MenuItem
 								primaryText="Sign out"
-								onTouchTap={this._signOut}
-								leftIcon={<ActionHighlightOff />}
+								onTouchTap={ this._signOut }
+								leftIcon={ <ActionHighlightOff /> }
 							/>
 						</IconMenu>
 					}
@@ -117,34 +142,25 @@ class AppComponent extends React.Component {
 										<h5 className="col-xs-12">Colors</h5>
 									</div>
 									<div className="row">
-										<div className="col-xs-4 main-content-card-text-field">
-											<TextField
-												floatingLabelText="Primary Color"
-												onFocus={this._doShowColorPicker.bind(this, "primary", true)}
-												onBlur={this._doShowColorPicker.bind(this, "primary", false)}
-											></TextField>
-											{ this.state.doShowColorPicker["primary"] ? <ChromePicker className="main-content-card-colorpicker"></ChromePicker> : null }
-										</div>
-										<div className="col-xs-4 main-content-card-text-field">
-											<TextField
-												floatingLabelText="Secondary Color"
-												onFocus={this._doShowColorPicker.bind(this, "secondary", true)}
-												onBlur={this._doShowColorPicker.bind(this, "secondary", false)}
-											></TextField>
-											{ this.state.doShowColorPicker["secondary"] ? <ChromePicker className="main-content-card-colorpicker"></ChromePicker> : null }
-										</div>
-										<div className="col-xs-4 main-content-card-text-field">
-											<TextField
-												floatingLabelText="Tertiary Color"
-												onFocus={this._doShowColorPicker.bind(this, "tertiary", true)}
-												onBlur={this._doShowColorPicker.bind(this, "tertiary", false)}
-											></TextField>
-											{ this.state.doShowColorPicker["tertiary"] ? <ChromePicker className="main-content-card-colorpicker"></ChromePicker> : null }
-										</div>
+										<ColorPicker
+											type="primary"
+											color={ this.state.rules.colors.primary }
+											onChange={ this._updateColor }
+										/>
+										<ColorPicker
+											type="secondary"
+											color={ this.state.rules.colors.secondary }
+											onChange={ this._updateColor }
+										/>
+										<ColorPicker
+											type="tertiary"
+											color={ this.state.rules.colors.tertiary }
+											onChange={ this._updateColor }
+										/>
 									</div>
 								</CardText>
 								<CardActions>
-									<FlatButton label="Save" secondary={true} />
+									<FlatButton label="Save" secondary={ true } />
 								</CardActions>
 							</Card>
 						</div>
@@ -152,7 +168,7 @@ class AppComponent extends React.Component {
 							<Card className="main-content-card">
 								<CardHeader title="Output"></CardHeader>
 								<CardText>
-									{this.props.children}
+									{ this.props.children }
 								</CardText>
 							</Card>
 						</div>

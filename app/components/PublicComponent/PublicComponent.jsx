@@ -7,7 +7,7 @@ import ReactDOM from "react-dom";
 import { baseTheme } from "../../../themes/baseTheme.js";
 import { getMuiTheme, MuiThemeProvider } from "material-ui/styles";
 // components
-import { AppBar, FloatingActionButton, FontIcon, IconMenu, IconButton, MenuItem, Subheader } from "material-ui";
+import { AppBar, Divider, FloatingActionButton, FontIcon, IconMenu, IconButton, MenuItem, Subheader } from "material-ui";
 // icons
 import ActionAccountCircle from "material-ui/svg-icons/action/account-circle";
 import MoreVertIcon from "material-ui/svg-icons/navigation/more-vert";
@@ -52,11 +52,22 @@ class PublicComponent extends React.Component {
 							<Subheader
 								style={{
 									fontWeight: "bold",
-									fontSize: "1.8rem"
+									fontSize: "1.6rem"
 								}}
 							>
 								Login
 							</Subheader>
+							<Divider/>
+							<MenuItem
+								primaryText="Slack"
+								onTouchTap={() => this._login("slack")}
+								leftIcon={
+									<FontIcon
+										className="fa fa-slack"
+									/>
+								}
+							/>
+							<Divider/>
 							<MenuItem
 								primaryText="Github"
 								onTouchTap={() => this._login("github")}

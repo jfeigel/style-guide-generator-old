@@ -44,6 +44,7 @@
     "moment": "^2.13.0",
     "passport-facebook": "^2.1.1",
     "passport-github2": "^0.1.10",
+    "passport-slack": "0.0.6",
     "passport-twitter": "^1.0.4",
     "react": "^15.0.1",
     "react-bootstrap": "^0.28.5",

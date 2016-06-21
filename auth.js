@@ -5,6 +5,7 @@ const config = require("./config.json");
 const co = require("co");
 
 const passport = require("koa-passport");
+const SlackStrategy = require("passport-slack").Strategy;
 const GithubStrategy = require("passport-github2").Strategy;
 const FacebookStrategy = require("passport-facebook").Strategy;
 const TwitterStrategy = require("passport-twitter").Strategy;
@@ -18,6 +19,18 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((obj, done) => {
 	done(null, obj);
 });
+
+passport.use(new SlackStrategy({
+	clientID: config.passport.slack.client_id,
+	clientSecret: config.passport.slack.client_secret,
+	callbackURL: `http://localhost:${(Number(process.env.PORT) + 1) || 3000}/auth/slack/callback`,
+	scope: "incoming-webhook users:read"
+}, (token, tokenSecret, profile, done) => {
+	console.log(token);
+	console.log(tokenSecret);
+	console.log(profile);
+	done(null, user);
+}));
 
 passport.use(new GithubStrategy({
 	clientID: config.passport.github.client_id,

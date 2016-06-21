@@ -30,6 +30,18 @@ public_routes.get("/logout", function* get(next) {
 	this.redirect("/");
 });
 
+// SLACK
+public_routes.get("/auth/slack",
+	passport.authenticate("slack")
+);
+
+public_routes.get("/auth/slack/callback",
+	passport.authenticate("slack", {
+		successRedirect: "/#/app",
+		failureRedirect: "/"
+	})
+);
+
 // GITHUB
 public_routes.get("/auth/github",
 	passport.authenticate("github")

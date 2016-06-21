@@ -104,7 +104,7 @@ class NavComponent extends React.Component {
 							return (
 								<Link
 									key={index + 1}
-									to={`/styleguide/${styleguide.id}`}
+									to={`/app/styleguide/${styleguide.id}`}
 								>
 									<ListItem
 										primaryText={styleguide.name}

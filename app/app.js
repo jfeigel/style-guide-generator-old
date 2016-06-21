@@ -15,7 +15,7 @@ const rootInstance = render((
 	<Router history={hashHistory}>
 		<Route path="/" component={Public}></Route>
 		<Route path="/app" component={App}>
-			<Route path="/styleguide/:styleguide_id" component={Styleguide} />
+			<Route path="/app/styleguide/:styleguide_id" component={Styleguide} />
 		</Route>
 	</Router>
 ), document.getElementById("react-wrapper"));
