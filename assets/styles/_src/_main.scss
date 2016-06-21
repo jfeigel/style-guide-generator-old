@@ -1,12 +1,44 @@
 .main-content-container {
+	display: flex;
+	flex: 1;
+	width: 100%;
 	> .row {
-		height: 100%;
+		display: flex;
+		flex: 1;
 		> [class*="col-"] {
 			display: flex;
 		}
 	}
 	.main-content-card {
 		margin: .9375rem auto;
+		display: flex;
 		flex: 1;
+		> div {
+			display: flex;
+			flex: 1;
+			flex-direction: column;
+		}
+		.main-content-card-header {
+		}
+		.main-content-card-text {
+			display: flex;
+			flex: 1;
+			flex-direction: column;
+			overflow-y: scroll;
+		}
+		.main-content-card-text-field {
+			overflow: hidden;
+			flex: 1;
+			flex-direction: column;
+			> div {
+				flex: 1;
+				+ div {
+					margin: .5rem 0;
+				}
+			}
+			hr {
+				width: calc(100% - 1.875rem) !important;
+			}
+		}
 	}
 }

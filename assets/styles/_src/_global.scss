@@ -5,13 +5,14 @@ html {
 
 #react-wrapper {
 	height: 100%;
-}
 
-div[data-reactroot] {
-	height: 100%;
+	div[data-reactroot] {
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+	}
 }
 
 .container-fluid {
 	overflow: hidden;
-	// min-height: 100%;
 }

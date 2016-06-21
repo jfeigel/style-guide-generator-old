@@ -4,6 +4,7 @@ import ReactDOM from "react-dom";
 
 // MATERIAL-UI
 // theme
+import { baseTheme } from "../../../themes/baseTheme.js";
 import { getMuiTheme, MuiThemeProvider } from "material-ui/styles";
 // components
 import { AppBar, FloatingActionButton, FontIcon, IconMenu, IconButton, MenuItem, Subheader } from "material-ui";
@@ -11,8 +12,6 @@ import { AppBar, FloatingActionButton, FontIcon, IconMenu, IconButton, MenuItem,
 import ActionAccountCircle from "material-ui/svg-icons/action/account-circle";
 import MoreVertIcon from "material-ui/svg-icons/navigation/more-vert";
 import MenuIcon from "material-ui/svg-icons/navigation/menu";
-
-const muiTheme = getMuiTheme({});
 
 class PublicComponent extends React.Component {
 	constructor(props) {
@@ -29,7 +28,7 @@ class PublicComponent extends React.Component {
 	}
 
 	getChildContext() {
-		return { muiTheme: getMuiTheme(muiTheme) };
+		return { muiTheme: getMuiTheme(baseTheme) };
 	}
 
 	_login(platform) {
