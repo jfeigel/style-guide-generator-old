@@ -40,7 +40,8 @@ module.exports = function grunt(grunt) {
 			styles: {
 				options: {
 					style: "expanded",
-					cacheLocation: "assets/styles/_src/.sass-cache"
+					cacheLocation: "assets/styles/_src/.sass-cache",
+					loadPath: "assets/bower_components/bootstrap/scss"
 				},
 				files: {
 					"assets/styles/custom.css": ["assets/styles/_src/custom.scss"]

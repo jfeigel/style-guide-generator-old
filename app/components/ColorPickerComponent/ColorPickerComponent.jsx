@@ -58,7 +58,7 @@ class ColorPickerComponent extends React.Component {
 
 	render() {
 		const popover = {
-			position: "relative",
+			position: "absolute",
 			zIndex: "2"
 		};
 		const cover = {
@@ -80,16 +80,13 @@ class ColorPickerComponent extends React.Component {
 		const floatingLabelStyle = {
 			textTransform: "capitalize"
 		};
-		const underlineStyle = {
-			width: "calc(100% - 1.875rem)"
-		};
 		return (
-			<div className="col-xs-4 main-content-card-text-field">
+			<div className={ `col-xs-12 col-lg-${this.props.colWidth || 4} main-content-card-text-field` }>
 				<span className="color-picker-value" style={ colorPickerDisplay }></span>
 				<TextField
 					floatingLabelText={ `${this.props.type} Color` }
 					floatingLabelStyle={ floatingLabelStyle }
-					underlineStyle={ underlineStyle }
+					fullWidth={ true }
 					onFocus={ this._doShowColorPicker.bind(this, true) }
 					onChange={ this._colorPickerChange }
 					value={ this.props.color }

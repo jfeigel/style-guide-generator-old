@@ -14,5 +14,8 @@ html {
 }
 
 .container-fluid {
-	overflow: hidden;
+	overflow: auto;
+	@include media-breakpoint-up(md) {
+		overflow: hidden;
+	}
 }

@@ -5,6 +5,10 @@
 	> .row {
 		display: flex;
 		flex: 1;
+		form {
+			display: flex;
+			flex: 1;
+		}
 		> [class*="col-"] {
 			display: flex;
 		}
@@ -25,11 +29,19 @@
 			flex: 1;
 			flex-direction: column;
 			overflow-y: scroll;
+			> * {
+				min-height: -webkit-min-content;
+				min-height: -moz-min-content;
+				min-height: min-content;
+			}
+			h5 {
+				margin: .5rem 0;
+			}
 		}
 		.main-content-card-text-field {
 			overflow: hidden;
-			flex: 1;
-			flex-direction: column;
+			// flex: 1;
+			// flex-direction: column;
 			> div {
 				flex: 1;
 				+ div {

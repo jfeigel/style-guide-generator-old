@@ -10,6 +10,8 @@ import { getMuiTheme, MuiThemeProvider } from "material-ui/styles";
 import {
 	AppBar,
 	Card, CardActions, CardHeader, CardText,
+	CircularProgress,
+	Divider,
 	Drawer,
 	FlatButton, IconButton,
 	IconMenu, MenuItem,
@@ -29,6 +31,7 @@ import _ from "lodash";
 // COMPONENT IMPORTS
 import Nav from "../NavComponent";
 import ColorPicker from "../ColorPickerComponent";
+import Heading from "../HeadingComponent";
 
 class AppComponent extends React.Component {
 	constructor(props) {
@@ -37,11 +40,21 @@ class AppComponent extends React.Component {
 		// Initial State
 		this.state = {
 			isDrawerOpen: true,
+			isSaving: false,
 			rules: {
 				colors: {
 					primary: "",
 					secondary: "",
 					tertiary: ""
+				},
+				font: "",
+				headings: {
+					h1: "",
+					h2: "",
+					h3: "",
+					h4: "",
+					h5: "",
+					h6: ""
 				}
 			}
 		};
@@ -51,6 +64,8 @@ class AppComponent extends React.Component {
 		this._toggleDrawer = this._toggleDrawer.bind(this);
 		this._onDrawerRequestChange = this._onDrawerRequestChange.bind(this);
 		this._updateColor = this._updateColor.bind(this);
+		this._updateHeading = this._updateHeading.bind(this);
+		this._save = this._save.bind(this);
 	}
 
 	// LIFECYCLE METHODS
@@ -98,12 +113,26 @@ class AppComponent extends React.Component {
 	_updateColor(type, color) {
 		const rules = this.state.rules;
 		rules.colors[type] = color;
+		this.setState({ rules: rules });
+	}
+
+	_updateHeading(number, value) {
+		const rules = this.state.rules;
+		rules.headings[number] = value;
+		this.setState({ rules: rules });
+	}
+
+	_save() {
 		this.setState({
-			rules: rules
+			isSaving: true
 		});
 	}
 
 	render() {
+		const nestedListStyle = {
+			paddingLeft: "16px",
+			paddingRight: "16px"
+		};
 		return (
 			<div>
 				<Drawer
@@ -134,37 +163,86 @@ class AppComponent extends React.Component {
 				/>
 				<div className="container-fluid main-content-container">
 					<div className="row">
-						<div className="col-xs-6">
-							<Card className="main-content-card">
-								<CardHeader title="Code" className="main-content-card-header"></CardHeader>
-								<CardText className="main-content-card-text">
-									<div className="row">
-										<h5 className="col-xs-12">Colors</h5>
-									</div>
-									<div className="row">
-										<ColorPicker
-											type="primary"
-											color={ this.state.rules.colors.primary }
-											onChange={ this._updateColor }
+						<div className="col-xs-12 col-md-6">
+							<form>
+								<Card className="main-content-card">
+									<CardHeader title="Code" className="main-content-card-header"></CardHeader>
+									<CardText className="main-content-card-text">
+										<List>
+											<ListItem
+												primaryText="Fonts"
+												primaryTogglesNestedList={ true }
+												nestedListStyle={ nestedListStyle }
+												nestedItems={[
+													<div key="fonts" className="row">
+														<div className="col-xs-12">
+															<TextField
+																floatingLabelText="Font Stack"
+																hintText={ "\"Helvetica Neue\", Helvetica, Arial, sans-serif" }
+																fullWidth={ true }
+															/>
+														</div>
+													</div>
+												]}
+											/>
+											<ListItem
+												primaryText="Colors"
+												primaryTogglesNestedList={ true }
+												nestedListStyle={ nestedListStyle }
+												nestedItems={[
+													<div key="colors" className="row">
+														{
+															_.map(this.state.rules.colors, (value, type) => {
+																return (
+																	<ColorPicker
+																		key={ type }
+																		type={ type }
+																		color={ value }
+																		colWidth={ 4 }
+																		onChange={ this._updateColor }
+																	/>
+																);
+															})
+														}
+													</div>
+												]}
+											/>
+											<ListItem
+												primaryText="Headings"
+												primaryTogglesNestedList={ true }
+												nestedListStyle={ nestedListStyle }
+												nestedItems={[
+													<div key="headings" className="row">
+														{
+															_.map(this.state.rules.headings, (value, number) => {
+																return (
+																	<Heading
+																		key={ number }
+																		number={ number }
+																		value={ value }
+																		colWidth={ 4 }
+																		onChange={ this._updateHeading }
+																	/>
+																);
+															})
+														}
+													</div>
+												]}
+											/>
+										</List>
+									</CardText>
+									<CardActions>
+										<FlatButton
+											label="Save"
+											secondary={ true }
+											onTouchTap={ this._save }
 										/>
-										<ColorPicker
-											type="secondary"
-											color={ this.state.rules.colors.secondary }
-											onChange={ this._updateColor }
-										/>
-										<ColorPicker
-											type="tertiary"
-											color={ this.state.rules.colors.tertiary }
-											onChange={ this._updateColor }
-										/>
-									</div>
-								</CardText>
-								<CardActions>
-									<FlatButton label="Save" secondary={ true } />
-								</CardActions>
-							</Card>
+									{ this.state.isSaving ? <CircularProgress size={ 0.4 } style={{ top: "20px" }} /> : null }
+									</CardActions>
+								</Card>
+							</form>
 						</div>
-						<div className="col-xs-6">
+						<div className="col-xs-12 col-md-6">
 							<Card className="main-content-card">
 								<CardHeader title="Output"></CardHeader>
 								<CardText>
