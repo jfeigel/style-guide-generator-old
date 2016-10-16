@@ -6,10 +6,11 @@ import ReactDOM from "react-dom";
 // theme
 import { baseTheme } from "../../../themes/baseTheme.js";
 import { getMuiTheme, MuiThemeProvider } from "material-ui/styles";
+import { grey50 } from "material-ui/styles/colors";
 // components
 import {
 	AppBar,
-	Card, CardActions, CardHeader, CardText,
+	Card, CardActions, CardText, CardTitle,
 	CircularProgress,
 	Divider,
 	Drawer,
@@ -134,7 +135,7 @@ class AppComponent extends React.Component {
 			paddingRight: "16px"
 		};
 		return (
-			<div>
+			<div style={{ backgroundColor: grey50 }}>
 				<Drawer
 					docked={ false }
 					open={ this.state.isDrawerOpen }
@@ -166,7 +167,7 @@ class AppComponent extends React.Component {
 						<div className="col-xs-12 col-md-6">
 							<form>
 								<Card className="main-content-card">
-									<CardHeader title="Code" className="main-content-card-header"></CardHeader>
+									<CardTitle title="Code" className="main-content-card-title"></CardTitle>
 									<CardText className="main-content-card-text">
 										<List>
 											<ListItem
@@ -244,7 +245,7 @@ class AppComponent extends React.Component {
 						</div>
 						<div className="col-xs-12 col-md-6">
 							<Card className="main-content-card">
-								<CardHeader title="Output"></CardHeader>
+								<Card title="Output"></Card>
 								<CardText>
 									{ this.props.children }
 								</CardText>
